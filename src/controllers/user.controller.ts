@@ -4,6 +4,13 @@ import { repository } from "@loopback/repository";
 import {UserRepository } from "../repositories/user.repository";
 import { post, get, requestBody } from "@loopback/rest";
 import { User } from "../models/user";
+import {
+  HttpErrors,
+  param,
+  put,
+  patch,
+  del,
+} from '@loopback/rest';
 
 export class UserController {
   constructor(
@@ -18,5 +25,10 @@ export class UserController {
   @get('/users')
   async getAllUsers(): Promise<Array<User>> {
     return await this.userRepo.find();
+  }
+
+  @get('/users/{id}')
+  async findUserById(@param.path.number('id') id: number): Promise<User> {
+    return await this.userRepo.findById(id);
   }
 }
