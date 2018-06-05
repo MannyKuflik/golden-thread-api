@@ -1,7 +1,6 @@
 import { DefaultCrudRepository, juggler } from '@loopback/repository';
+import { User } from '../models';
 import { inject } from '@loopback/core';
-import { DataSource } from 'loopback-datasource-juggler';
-import { User } from '../models/user';
 
 export class UserRepository extends DefaultCrudRepository<
   User,
