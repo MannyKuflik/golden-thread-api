@@ -12,39 +12,37 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Uncomment these imports to begin using these cool features!
-// import {inject} from @loopback/context;
 const repository_1 = require("@loopback/repository");
-const registration_repository_1 = require("../repositories/registration.repository");
+const repositories_1 = require("../repositories");
+const models_1 = require("../models");
 const rest_1 = require("@loopback/rest");
-const registration_1 = require("../models/registration");
 let RegistrationController = class RegistrationController {
-    constructor(registrationRepo) {
-        this.registrationRepo = registrationRepo;
+    constructor(userRepo) {
+        this.userRepo = userRepo;
     }
-    async createRegistration(Registration) {
-        return await this.registrationRepo.create(Registration);
-    }
-    async getAllRegistration() {
-        return await this.registrationRepo.find();
+    async registerUser(user) {
+        // Check that required fields are supplied
+        if (!user.email || !user.password) {
+            throw new rest_1.HttpErrors.BadRequest('missing data');
+        }
+        // Check that user does not already exist
+        let userExists = !!(await this.userRepo.count({ email: user.email }));
+        if (userExists) {
+            throw new rest_1.HttpErrors.BadRequest('user already exists');
+        }
+        return await this.userRepo.create(user);
     }
 };
 __decorate([
     rest_1.post('/registration'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [registration_1.Registration]),
+    __metadata("design:paramtypes", [models_1.User]),
     __metadata("design:returntype", Promise)
-], RegistrationController.prototype, "createRegistration", null);
-__decorate([
-    rest_1.get('/registration'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], RegistrationController.prototype, "getAllRegistration", null);
+], RegistrationController.prototype, "registerUser", null);
 RegistrationController = __decorate([
-    __param(0, repository_1.repository(registration_repository_1.RegistrationRepository.name)),
-    __metadata("design:paramtypes", [registration_repository_1.RegistrationRepository])
+    __param(0, repository_1.repository(repositories_1.UserRepository)),
+    __metadata("design:paramtypes", [repositories_1.UserRepository])
 ], RegistrationController);
 exports.RegistrationController = RegistrationController;
 //# sourceMappingURL=registration.controller.js.map
