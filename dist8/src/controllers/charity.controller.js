@@ -15,47 +15,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 const repositories_1 = require("../repositories");
 const rest_1 = require("@loopback/rest");
-let UserController = class UserController {
-    constructor(userRepo) {
-        this.userRepo = userRepo;
+let CharityController = class CharityController {
+    constructor(charityRepo) {
+        this.charityRepo = charityRepo;
     }
-    async findUsers() {
-        return await this.userRepo.find();
+    async findCharities() {
+        return await this.charityRepo.find();
     }
-    async findUsersById(id) {
+    async findCharityById(id) {
         // Check for valid ID
-        let userExists = !!(await this.userRepo.count({ id }));
-        if (!userExists) {
-            throw new rest_1.HttpErrors.BadRequest(`user ID ${id} does not exist`);
+        let charityExists = !!(await this.charityRepo.count({ id }));
+        if (!charityExists) {
+            throw new rest_1.HttpErrors.BadRequest(`charity ID ${id} does not exist`);
         }
-        return await this.userRepo.findById(id);
+        return await this.charityRepo.findById(id);
     }
 };
 __decorate([
-    rest_1.get('/users'),
+    rest_1.get('/charities'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "findUsers", null);
+], CharityController.prototype, "findCharities", null);
 __decorate([
-    rest_1.get('/users/{id}'),
+    rest_1.get('/charitiess/{id}'),
     __param(0, rest_1.param.path.number('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "findUsersById", null);
-UserController = __decorate([
-    __param(0, repository_1.repository(repositories_1.UserRepository)),
-    __metadata("design:paramtypes", [repositories_1.UserRepository])
-], UserController);
-exports.UserController = UserController;
-// @get(/user)
-// async findUsersById(@param.path.number('id') id: number): Promise<User> {
-//   // Check for valid ID
-//   let userExists: boolean = !!(await this.userRepo.count({ id }));
-//   if (!userExists) {
-//     throw new HttpErrors.BadRequest(`user ID ${id} does not exist`);
-//   }
-//   return await this.userRepo.findById(id);
-// }
-//# sourceMappingURL=user.controller.js.map
+], CharityController.prototype, "findCharityById", null);
+CharityController = __decorate([
+    __param(0, repository_1.repository(repositories_1.CharityRepository)),
+    __metadata("design:paramtypes", [repositories_1.CharityRepository])
+], CharityController);
+exports.CharityController = CharityController;
+//# sourceMappingURL=charity.controller.js.map
