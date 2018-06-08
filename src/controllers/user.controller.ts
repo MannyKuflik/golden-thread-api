@@ -10,7 +10,18 @@ import {
 export class UserController {
   constructor(
     @repository(UserRepository) protected userRepo: UserRepository,
-  ) {}
+  ) { }
+
+
+  @get('/users/{user_id}/donations')
+  async getDonationsByUserId(
+    @param.path.number('user_id') userId: number,
+    @param.query.date('garbage') trash: Date,
+
+  ) {
+    console.log(userId);
+    console.log(trash);
+  }
 
   @get('/users')
   async findUsers(): Promise<User[]> {

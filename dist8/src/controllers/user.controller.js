@@ -19,6 +19,10 @@ let UserController = class UserController {
     constructor(userRepo) {
         this.userRepo = userRepo;
     }
+    async getDonationsByUserId(userId, trash) {
+        console.log(userId);
+        console.log(trash);
+    }
     async findUsers() {
         return await this.userRepo.find();
     }
@@ -31,6 +35,14 @@ let UserController = class UserController {
         return await this.userRepo.findById(id);
     }
 };
+__decorate([
+    rest_1.get('/users/{user_id}/donations'),
+    __param(0, rest_1.param.path.number('user_id')),
+    __param(1, rest_1.param.query.date('garbage')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Date]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getDonationsByUserId", null);
 __decorate([
     rest_1.get('/users'),
     __metadata("design:type", Function),

@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CharityController.prototype, "findCharities", null);
 __decorate([
-    rest_1.get('/charitiess/{id}'),
+    rest_1.get('/charities/{id}'),
     __param(0, rest_1.param.path.number('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),

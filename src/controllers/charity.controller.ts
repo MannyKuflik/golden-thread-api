@@ -17,7 +17,7 @@ export class CharityController {
     return await this.charityRepo.find();
   }
 
-  @get('/charitiess/{id}')
+  @get('/charities/{id}')
   async findCharityById(@param.path.number('id') id: number): Promise<Charity> {
     // Check for valid ID
     let charityExists: boolean = !!(await this.charityRepo.count({ id }));

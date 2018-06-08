@@ -11,12 +11,12 @@ export class Charity extends Entity {
   @property({
     type: 'string',
   })
-  name: number;
+  name: string;
 
   @property({
     type: 'string',
   })
-  mission: number;
+  mission: string;
 
   @property({
     type: 'string',
