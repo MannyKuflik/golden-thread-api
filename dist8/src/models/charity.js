@@ -26,13 +26,13 @@ __decorate([
     repository_1.property({
         type: 'string',
     }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Charity.prototype, "name", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
     }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Charity.prototype, "mission", void 0);
 __decorate([
     repository_1.property({

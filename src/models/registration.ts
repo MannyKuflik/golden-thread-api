@@ -12,12 +12,7 @@ id?: number;
 @property({
     type: 'string'
 })
-Email: string
-
-    @property({
-        type: 'string'
-    })
-phonenumber: string
+email: string
 
 @property({
     type: 'string'

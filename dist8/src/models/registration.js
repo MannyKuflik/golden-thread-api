@@ -27,13 +27,7 @@ __decorate([
         type: 'string'
     }),
     __metadata("design:type", String)
-], Registration.prototype, "Email", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string'
-    }),
-    __metadata("design:type", String)
-], Registration.prototype, "phonenumber", void 0);
+], Registration.prototype, "email", void 0);
 __decorate([
     repository_1.property({
         type: 'string'

@@ -15,24 +15,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 const repositories_1 = require("../repositories");
 const rest_1 = require("@loopback/rest");
+const jsonwebtoken_1 = require("jsonwebtoken");
 let UserController = class UserController {
     constructor(userRepo) {
         this.userRepo = userRepo;
     }
+    // @post('/registration')
+    // async createUser(@requestBody() user: User){
+    //   return await this.userRepo.create(user);
+    // }
     async getDonationsByUserId(userId, trash) {
         console.log(userId);
         console.log(trash);
     }
-    async findUsers() {
-        return await this.userRepo.find();
-    }
-    async findUsersById(id) {
-        // Check for valid ID
-        let userExists = !!(await this.userRepo.count({ id }));
-        if (!userExists) {
-            throw new rest_1.HttpErrors.BadRequest(`user ID ${id} does not exist`);
+    async getAllUsers(jwt) {
+        if (!jwt) {
+            throw new rest_1.HttpErrors.Unauthorized("No jwt given");
         }
-        return await this.userRepo.findById(id);
+        try {
+            jsonwebtoken_1.verify(jwt, 'shh');
+            return await this.userRepo.find();
+        }
+        catch (err) {
+            throw new rest_1.HttpErrors.BadRequest("Jwt not valid");
+        }
+    }
+    async getUserById(id, jwt) {
+        if (!jwt) {
+            throw new rest_1.HttpErrors.Unauthorized("No jwt given");
+        }
+        try {
+            jsonwebtoken_1.verify(jwt, 'shh');
+            return await this.userRepo.findById(id);
+        }
+        catch (err) {
+            throw new rest_1.HttpErrors.NotFound('User not found, sorry!');
+        }
     }
 };
 __decorate([
@@ -45,17 +63,19 @@ __decorate([
 ], UserController.prototype, "getDonationsByUserId", null);
 __decorate([
     rest_1.get('/users'),
+    __param(0, rest_1.param.query.string('jwt')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "findUsers", null);
+], UserController.prototype, "getAllUsers", null);
 __decorate([
     rest_1.get('/users/{id}'),
-    __param(0, rest_1.param.path.number('id')),
+    __param(0, rest_1.param.query.number('id')),
+    __param(1, rest_1.param.query.string('jwt')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, String]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "findUsersById", null);
+], UserController.prototype, "getUserById", null);
 UserController = __decorate([
     __param(0, repository_1.repository(repositories_1.UserRepository)),
     __metadata("design:paramtypes", [repositories_1.UserRepository])

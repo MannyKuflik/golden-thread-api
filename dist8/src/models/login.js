@@ -27,7 +27,7 @@ __decorate([
         type: 'string'
     }),
     __metadata("design:type", String)
-], Login.prototype, "username", void 0);
+], Login.prototype, "email", void 0);
 __decorate([
     repository_1.property({
         type: 'string'

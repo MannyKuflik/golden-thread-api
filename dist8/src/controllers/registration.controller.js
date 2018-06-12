@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 const repositories_1 = require("../repositories");
 const models_1 = require("../models");
+const bcrypt = require("bcrypt");
 const rest_1 = require("@loopback/rest");
 let RegistrationController = class RegistrationController {
     constructor(userRepo) {
         this.userRepo = userRepo;
     }
     async registerUser(user) {
+        // Hash incoming password
+        let hashed = await bcrypt.hash(user.password, 10);
         // Check that required fields are supplied
         if (!user.email || !user.password) {
             throw new rest_1.HttpErrors.BadRequest('missing data');
@@ -30,7 +33,14 @@ let RegistrationController = class RegistrationController {
         if (userExists) {
             throw new rest_1.HttpErrors.BadRequest('user already exists');
         }
-        return await this.userRepo.create(user);
+        var storedUser = new models_1.User();
+        storedUser.firstname = user.firstname;
+        storedUser.lastname = user.lastname;
+        storedUser.email = user.email;
+        storedUser.password = hashed;
+        await this.userRepo.create(storedUser);
+        storedUser.passowrd = "";
+        return storedUser;
     }
 };
 __decorate([

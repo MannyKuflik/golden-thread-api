@@ -4,6 +4,6 @@ export declare class UserController {
     protected userRepo: UserRepository;
     constructor(userRepo: UserRepository);
     getDonationsByUserId(userId: number, trash: Date): Promise<void>;
-    findUsers(): Promise<User[]>;
-    findUsersById(id: number): Promise<User>;
+    getAllUsers(jwt: string): Promise<Array<User>>;
+    getUserById(id: number, jwt: string): Promise<User>;
 }
